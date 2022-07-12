@@ -12,7 +12,7 @@ import { FoodOrderDialog } from '../components/FoodOrderDialog';
 // reducers
 import {
   initialState as foodsInitialState,
-  foodsActionTyps,
+  foodsActionTypes,
   foodsReducer,
 } from '../reducers/foods';
 
@@ -29,11 +29,11 @@ import { HTTP_STATUS_CODE } from '../constants';
 import { COLORS } from '../style_constants';
 import { REQUEST_STATE } from '../constants';
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 32px;
-`;
+import {
+  HeaderWrapper,
+  MainLogoImage
+} from '../components/StyledHeader.jsx';
+
 
 const BagIconWrapper = styled.div`
   padding-top: 24px;
@@ -43,9 +43,6 @@ const ColoredBagIcon = styled(LocalMallIcon)`
   color: ${COLORS.MAIN};
 `;
 
-const MainLogoImage = styled.img`
-  height: 90px;
-`
 
 const FoodsList = styled.div`
   display: flex;
@@ -72,16 +69,17 @@ export const Foods = ({match}) => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch({ type: foodsActionTyps.FETCHING });
+    dispatch({ type: foodsActionTypes.FETCHING });
     fetchFoods(match.params.restaurantsId)
       .then((data) => {
         dispatch({
-          type: foodsActionTyps.FETCH_SUCCESS,
+          type: foodsActionTypes.FETCH_SUCCESS,
           payload: {
             foods: data.foods
           }
         });
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const submitOrder = () => {
